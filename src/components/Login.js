@@ -1,8 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {API_ROOT} from "../constants";
+
 import {
-    Form, Icon, Input, Button, Checkbox,
+    Form, Icon, Input, Button, Checkbox, message,
 } from 'antd';
+
 
 const FormItem = Form.Item;
 
@@ -12,16 +15,35 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                fetch(`${API_ROOT}/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: values.username,
+                        password: values.password
+                    })
+                }).then((response) => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    throw new Error(response.statusText);
+                })
+                    .then(() => {
+                        message.success("Login Succeeded");
+                        //TODO: Handle login state change
+                    })
+                    .catch(() => message.error("Login Failed"))
             }
         });
-    }
+
+
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator('userName', {
+                    {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
                         <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />

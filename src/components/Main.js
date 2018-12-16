@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export class Main extends React.Component {
     getLogin = () => {
         return <Redirect to='/login'/>
-    }
+    };
     render() {
         return (
             <div className="main">
@@ -17,7 +17,6 @@ export class Main extends React.Component {
                     <Route path='/register' component={Register} />
                     <Route render={this.getLogin}/>
                 </Switch>
-
             </div>
         )
     }

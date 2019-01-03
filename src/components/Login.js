@@ -23,15 +23,20 @@ class NormalLoginForm extends React.Component {
                     })
                 }).then((response) => {
                     if (response.ok) {
-                        return response;
+                        return response.text();
                     }
                     throw new Error(response.statusText);
                 })
-                    .then(() => {
+                    .then((response) => {
                         message.success("Login Succeeded");
                         //TODO: Handle login state change
+                        this.props.handleLogin(response);
+
                     })
-                    .catch(() => message.error("Login Failed"))
+                    .catch((err) => {
+                        console.log(err);
+                        message.error("Login Failed")
+                    })
             }
         });
 

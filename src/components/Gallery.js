@@ -1,10 +1,8 @@
+import React, { Component }from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
-import ReactDOM from 'react-dom';
 import GridGallery from 'react-grid-gallery';
 
-
-export class Gallery extends React.Component {
+export class Gallery extends Component {
     static propTypes = {
         images: PropTypes.arrayOf(
             PropTypes.shape({
@@ -18,19 +16,17 @@ export class Gallery extends React.Component {
         ).isRequired
     };
 
-    render () {
-        var images =
-            this.props.images.map((i) => {
-                return {
-                    ...i,
-                    customeOverlay: (
-                        <div style={captionStyle}>
-                            <div>{i.caption}</div>
-                        </div>
-                    )
-                };
-            });
-
+    render() {
+        const images = this.props.images.map((image) => {
+            return {
+                ...image,
+                customOverlay: (
+                    <div style={captionStyle}>
+                        <div>{`${image.user}: ${image.caption}`}</div>
+                    </div>
+                ),
+            };
+        });
 
         return (
             <div style={wrapperStyle}>
@@ -43,14 +39,14 @@ export class Gallery extends React.Component {
     }
 }
 
+
 const wrapperStyle = {
     display: "block",
     minHeight: "1px",
     width: "100%",
     border: "1px solid #ddd",
-    overflow: "auto"};
-
-
+    overflow: "auto"
+};
 
 const captionStyle = {
     backgroundColor: "rgba(0, 0, 0, 0.8)",
@@ -63,4 +59,3 @@ const captionStyle = {
     padding: "2px",
     fontSize: "90%"
 };
-

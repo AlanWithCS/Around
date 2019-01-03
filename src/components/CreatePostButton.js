@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { CreatePostForm } from './CreatePostForm'
 import { Modal, Button } from 'antd';
 
 export class CreatePostButton extends React.Component {
@@ -50,7 +50,7 @@ export class CreatePostButton extends React.Component {
                     confirmLoading={confirmLoading}
                     onCancel={this.handleCancel}
                 >
-                    <p>{ModalText}</p>
+                    <CreatePostForm/>
                 </Modal>
             </div>
         );
